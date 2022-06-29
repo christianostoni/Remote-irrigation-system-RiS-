@@ -37,5 +37,5 @@ def irriga():
     return redirect(url_for("home"))
 
     
-# if __name__ == '__main__':
-#     app.run(debug = True, port = 8080, host='192.168.1.20')
+if __name__ == '__main__':
+    app.run(debug = True, port = 4444, host='ip_address')
