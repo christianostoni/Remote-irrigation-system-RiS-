@@ -1,0 +1,50 @@
+<html>
+    <style>
+        table{border-collapse: collapse;
+              text-align: center;}
+        td, th {border:1px solid #ddd;
+                padding: 8x;
+                font-size: 23px;}  
+        caption{font-size: 25px;
+                color: red;}
+        button{font-size: 20px;
+               color: red;
+               margin-top: 10px;
+               border-color: blue}
+        #sec{font-size: 20px;
+             width: 80px;}
+        form{display: inline}
+    </style>
+
+    <script>
+        function func(){
+            location.href='/irriga'
+        }
+        function aggiorna(){
+            window.location.reload(true)
+        }
+    </script>
+    <head>
+        <title>irrigatore</title>
+    </head>
+    <body>.
+        <div>
+            <table>
+                <caption>COMANDI</caption>
+                <thead>
+                    <tr><th>umidità</th><th>stato</th></tr>
+                </thead>
+                <tbody>
+			<tr><td>{{umidita}}</td><td>{{stato}}</td><td></tr>
+                </tbody>
+            </table>
+            <form action="/irriga" method="post">
+                <button type="submit">invia</button>                
+                <input id="sec" name="secondi" type="text" placeholder="secondi">
+
+            </form>
+            <button id="aggiorna" onclick="aggiorna()">aggiorna</button>
+
+        </div>
+     </body>
+</html>
