@@ -1,27 +1,36 @@
 <html>
-    <style>
-        table{border-collapse: collapse;
-              text-align: center;}
-        td, th {border:1px solid #ddd;
-                padding: 8x;
-                font-size: 23px;}  
-        caption{font-size: 25px;
-                color: red;}
-        button{font-size: 20px;
-               color: red;
-               margin-top: 10px;
-               border-color: blue}
-        #sec{font-size: 20px;
-             width: 80px;}
-        form{display: inline}
-    </style>
-
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/index.css') }}">
+    <script src="{{ url_for('static',filename='js/sha1-min.js') }}"></script>
     <script>
         function func(){
             location.href='/irriga'
         }
         function aggiorna(){
             window.location.reload(true)
+        }
+        
+        function sha1_encrypt(password) {
+            let digest = hex_sha1(password)
+            return btoa(digest)
+        };
+        
+        function registra_account() {
+            var username = document.getElementById("user").value;
+            fetch('/register/success', {
+                method: "POST",
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    user: username,
+                    password: sha1_encrypt(document.getElementById("password").value)
+                    })
+            }).then(post => {
+                if (post.status == 200) {
+                    alert("Utente " + username + " registrato. E' necessario loggarsi nuovamente")
+                    window.location.replace('/')
+                }
+                else
+                    alert("Non è stato possibile registrare un account con username: " + username)
+            });
         }
     </script>
     <head>
@@ -38,13 +47,23 @@
 			<tr><td>{{umidita}}</td><td>{{stato}}</td><td></tr>
                 </tbody>
             </table>
-            <form action="/irriga" method="post">
+            <form action="/irriga" method="post" class="irriga-form">
                 <button type="submit">invia</button>                
                 <input id="sec" name="secondi" type="text" placeholder="secondi">
 
-            </form>
             <button id="aggiorna" onclick="aggiorna()">aggiorna</button>
-
+            </form>
         </div>
+        <br>
+        <form action="javascript:registra_account()" class="register-form">
+            <h3>Registra un nuovo account</h3><i>l'utente admin verrà eliminato</i>
+            <input type="text" id="user" placeholder="Username" required><br>
+            <input type="password" id="password" placeholder="Password" required><br>
+            <input type="submit" value="Registra">
+        </form>
+        <form action="/logout">
+            Elimina il token d'accesso: 
+            <button type="submit">LOGOUT</button>
+        </form>
      </body>
 </html>

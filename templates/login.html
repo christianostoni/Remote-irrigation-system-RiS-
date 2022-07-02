@@ -1,0 +1,39 @@
+<html>
+<head>
+    <title>Login RIS</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/login.css') }}">
+    <script src="{{ url_for('static',filename='js/sha1-min.js') }}"></script>
+    <script>
+        function sha1_encrypt(password) {
+            let digest = hex_sha1(password)
+            return btoa(digest)
+        };
+
+        function post_send() {
+            fetch('/login/success', {
+                method: "POST",
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    user: document.getElementById("user").value,
+                    password: sha1_encrypt(document.getElementById("password").value)
+                    })
+            }).then(post => {
+                if (post.status == 200)
+                    window.location.replace("/home");
+                else
+                    alert("Le credenziali sono errate, riprova.")
+            });
+        };
+
+    </script>
+</head>
+<body>
+    <form action="javascript:post_send()">
+        <h3>Login RIS</h3>
+        <i>Perfavore inserisci le credenziali</i>
+        <input type="text" id="user" placeholder="Username" required><br>
+        <input type="password" id="password" placeholder="Password" required><br>
+        <input type="submit" value="Entra">
+    </form>
+</body>
+</html>
