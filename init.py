@@ -74,7 +74,7 @@ def home():
     gpio.output(led, gpio.LOW)
     return render_template('index.html', **data)
 
-@app.route('/irriga', methods=['GET'])
+@app.route('/irriga', methods=['GET', 'POST'])
 def irriga():
     # controlla se l'utente è autorizzato
     if not database.retrive_token(request.cookies.get('token')): return Response(response="<h3>Errore 405:</h3>Token d'accesso <u>mancante</u> o <u>scaduto</u>", status=405)
@@ -88,4 +88,4 @@ def irriga():
     return redirect(url_for("home"))
 
 if __name__ == '__main__':
-    app.run(debug = True, port = 4444, host='127.0.0.1')
+    app.run(debug = True, port = 4444, host='192.168.1.20')
