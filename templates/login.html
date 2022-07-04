@@ -30,10 +30,17 @@
 <body>
     <form action="javascript:post_send()">
         <h3>Login RIS</h3>
+        <script type="text/javascript">
+            document.write(`
         <i>Perfavore inserisci le credenziali</i>
         <input type="text" id="user" placeholder="Username" required><br>
         <input type="password" id="password" placeholder="Password" required><br>
         <input type="submit" value="Entra">
+            `)
+        </script>
+        <noscript>
+            <i>Perfavore abilita Javascript</i>
+        </noscript>
     </form>
 </body>
 </html>
